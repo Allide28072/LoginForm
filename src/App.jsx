@@ -10,9 +10,13 @@ import "./App.css";
 export default function App() {
   return (
     <>
+      <a className="skip-link" href="#main-content">
+        Skip to main content
+      </a>
+
       <Navbar />
 
-      <main className="main-content">
+      <main id="main-content" className="main-content" tabIndex={-1}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
