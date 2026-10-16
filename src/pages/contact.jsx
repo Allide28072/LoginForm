@@ -122,6 +122,7 @@ export default function Contact() {
 
         <form
           className="form-card"
+          aria-label="Contact form"
           onSubmit={handleSubmit}
           onBlur={handleBlur}
           aria-busy={sending}

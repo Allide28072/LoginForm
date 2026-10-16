@@ -78,11 +78,17 @@ describe("Contact page", () => {
 
     expect(screen.getByLabelText(/full name/i)).toBeDisabled();
     expect(screen.getByLabelText(/message/i)).toBeDisabled();
+    expect(
+      screen.getByRole("form", { name: /contact form/i }),
+    ).toHaveAttribute("aria-busy", "true");
 
     expect(
       await screen.findByText(/passed validation/i),
     ).toBeInTheDocument();
     expect(screen.getByLabelText(/full name/i)).toBeEnabled();
+    expect(
+      screen.getByRole("form", { name: /contact form/i }),
+    ).toHaveAttribute("aria-busy", "false");
   });
 
   it("reports every empty field", async () => {
