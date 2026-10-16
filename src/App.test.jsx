@@ -63,4 +63,35 @@ describe("App routing", () => {
       screen.getByRole("contentinfo"),
     ).toBeInTheDocument();
   });
+
+  it("offers a skip link that targets the main landmark", async () => {
+    renderApp("/");
+
+    await screen.findByRole("heading", { name: /a friendly home for/i });
+
+    const skipLink = screen.getByRole("link", {
+      name: /skip to main content/i,
+    });
+    expect(skipLink).toHaveAttribute("href", "#main-content");
+
+    const main = screen.getByRole("main");
+    expect(main).toHaveAttribute("id", "main-content");
+    expect(main).toHaveAttribute("tabindex", "-1");
+  });
+
+  it("places the skip link before the navigation", async () => {
+    renderApp("/");
+
+    await screen.findByRole("heading", { name: /a friendly home for/i });
+
+    const skipLink = screen.getByRole("link", {
+      name: /skip to main content/i,
+    });
+    const navigation = screen.getByRole("navigation", { name: /primary/i });
+
+    expect(
+      Boolean(skipLink.compareDocumentPosition(navigation) &
+        Node.DOCUMENT_POSITION_FOLLOWING),
+    ).toBe(true);
+  });
 });
