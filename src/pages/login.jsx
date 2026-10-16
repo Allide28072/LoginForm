@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import usePageTitle from "../hooks/usePageTitle";
 import { validateLogin } from "../lib/validation";
@@ -13,6 +13,10 @@ export default function Login() {
   const [errors, setErrors] = useState({});
   const [notice, setNotice] = useState("");
   const [success, setSuccess] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const submitTimer = useRef(null);
+
+  useEffect(() => () => clearTimeout(submitTimer.current), []);
 
   function clearFieldError(field) {
     setErrors((previous) => ({ ...previous, [field]: "" }));
@@ -31,7 +35,12 @@ export default function Login() {
       return;
     }
 
-    setSuccess(true);
+    setSubmitting(true);
+
+    submitTimer.current = setTimeout(() => {
+      setSubmitting(false);
+      setSuccess(true);
+    }, 700);
   }
 
   return (
@@ -133,8 +142,19 @@ export default function Login() {
             </p>
           )}
 
-          <button className="button button-primary form-submit" type="submit">
-            Sign in <span>→</span>
+          <button
+            className="button button-primary form-submit"
+            type="submit"
+            disabled={submitting}
+          >
+            {submitting ? (
+              <>
+                <span className="spinner" aria-hidden="true" />
+                Signing in…
+              </>
+            ) : (
+              <>Sign in <span>→</span></>
+            )}
           </button>
         </form>
 
