@@ -22,6 +22,17 @@ describe("Contact page", () => {
     expect(screen.getByLabelText(/message/i)).toBeInTheDocument();
   });
 
+  it("marks every field as required", () => {
+    renderContact();
+
+    for (const label of [/full name/i, /email address/i, /subject/i, /message/i]) {
+      expect(screen.getByLabelText(label)).toHaveAttribute(
+        "aria-required",
+        "true",
+      );
+    }
+  });
+
   it("reports every empty field", async () => {
     const user = userEvent.setup();
     renderContact();

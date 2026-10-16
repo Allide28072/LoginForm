@@ -108,6 +108,7 @@ export default function Contact() {
               onChange={handleChange}
               placeholder="Your name"
               autoComplete="name"
+              required
             />
 
             <TextField
@@ -120,6 +121,7 @@ export default function Contact() {
               onChange={handleChange}
               placeholder="Enter your email"
               autoComplete="email"
+              required
             />
           </div>
 
@@ -131,6 +133,7 @@ export default function Contact() {
             error={errors.subject}
             onChange={handleChange}
             placeholder="What is this about?"
+            required
           />
 
           <TextField
@@ -143,6 +146,7 @@ export default function Contact() {
             onChange={handleChange}
             placeholder="Write your message here..."
             rows={5}
+            required
           />
 
           {sent && (
