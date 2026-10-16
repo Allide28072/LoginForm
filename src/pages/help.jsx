@@ -121,6 +121,12 @@ export default function Help() {
             );
           })}
         </div>
+
+        {visibleQuestions.length === 0 && (
+          <p className="faq-empty" role="status">
+            No questions match “{query.trim()}”. Try another search term.
+          </p>
+        )}
       </section>
 
       <section className="simple-cta">

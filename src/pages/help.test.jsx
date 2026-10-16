@@ -72,4 +72,19 @@ describe("Help page", () => {
     ).not.toBeInTheDocument();
     expect(screen.getByText("1 of 5 articles")).toBeInTheDocument();
   });
+
+  it("shows an empty state when nothing matches", async () => {
+    const user = userEvent.setup();
+    renderHelp();
+
+    await user.type(
+      screen.getByLabelText(/search the help center/i),
+      "zzzzz",
+    );
+
+    expect(
+      screen.getByRole("status"),
+    ).toHaveTextContent(/no questions match/i);
+    expect(screen.queryByRole("button", { name: /loginform/i })).not.toBeInTheDocument();
+  });
 });
