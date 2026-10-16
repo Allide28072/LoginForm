@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import usePageTitle from "../hooks/usePageTitle";
-import { validateContact } from "../lib/validation";
+import { MESSAGE_MAX_LENGTH, validateContact } from "../lib/validation";
 import TextField from "../components/TextField";
 
 const emptyForm = {
@@ -146,8 +146,14 @@ export default function Contact() {
             onChange={handleChange}
             placeholder="Write your message here..."
             rows={5}
+            maxLength={MESSAGE_MAX_LENGTH}
             required
           />
+
+          <p className="field-counter" id="contact-message-counter">
+            <span className="visually-hidden">Characters used: </span>
+            {form.message.length}/{MESSAGE_MAX_LENGTH}
+          </p>
 
           {sent && (
             <p className="form-message success" role="status">
