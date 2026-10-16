@@ -55,6 +55,27 @@ describe("Login page", () => {
     expect(form).toHaveAttribute("aria-busy", "false");
   });
 
+  it("disables the inputs while signing in", async () => {
+    const user = userEvent.setup();
+    renderLogin();
+
+    const email = screen.getByLabelText(/email address/i);
+    const remember = screen.getByRole("checkbox", { name: /remember me/i });
+
+    await user.type(email, "me@example.com");
+    await user.type(screen.getByLabelText(/^password$/i), "secret123");
+    await user.click(screen.getByRole("button", { name: /^sign in/i }));
+
+    expect(email).toBeDisabled();
+    expect(remember).toBeDisabled();
+
+    expect(
+      await screen.findByText(/form validated successfully/i),
+    ).toBeInTheDocument();
+    expect(email).toBeEnabled();
+    expect(remember).toBeEnabled();
+  });
+
   it("rejects an invalid email address", async () => {
     const user = userEvent.setup();
     renderLogin();

@@ -69,6 +69,7 @@ export default function Login() {
             placeholder="you@example.com"
             value={email}
             error={errors.email}
+            disabled={submitting}
             onChange={(event) => {
               setEmail(event.target.value);
               clearFieldError("email");
@@ -83,10 +84,12 @@ export default function Login() {
             placeholder="Enter your password"
             value={password}
             error={errors.password}
+            disabled={submitting}
             labelAction={
               <button
                 type="button"
                 className="text-button"
+                disabled={submitting}
                 onClick={() => setShowPassword((previous) => !previous)}
               >
                 {showPassword ? "Hide" : "Show"}
@@ -103,6 +106,7 @@ export default function Login() {
               <input
                 type="checkbox"
                 checked={remember}
+                disabled={submitting}
                 onChange={(event) => setRemember(event.target.checked)}
               />
               Remember me
@@ -111,6 +115,7 @@ export default function Login() {
             <button
               type="button"
               className="text-button"
+              disabled={submitting}
               onClick={() => {
                 setErrors({});
                 setSuccess(false);
