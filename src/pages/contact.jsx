@@ -1,18 +1,20 @@
 import { useState } from "react";
 import usePageTitle from "../hooks/usePageTitle";
-import { firstError, validateContact } from "../lib/validation";
+import { validateContact } from "../lib/validation";
+
+const emptyForm = {
+  name: "",
+  email: "",
+  subject: "",
+  message: "",
+};
 
 export default function Contact() {
   usePageTitle("Contact");
 
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
+  const [form, setForm] = useState(emptyForm);
 
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState({});
   const [sent, setSent] = useState(false);
 
   function handleChange(event) {
@@ -23,27 +25,22 @@ export default function Contact() {
       [name]: value,
     }));
 
-    setError("");
+    setErrors((previous) => ({ ...previous, [name]: "" }));
     setSent(false);
   }
 
   function handleSubmit(event) {
     event.preventDefault();
 
-    const message = firstError(validateContact(form));
+    const nextErrors = validateContact(form);
+    setErrors(nextErrors);
 
-    if (message) {
-      setError(message);
+    if (Object.keys(nextErrors).length > 0) {
       return;
     }
 
     setSent(true);
-    setForm({
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-    });
+    setForm(emptyForm);
   }
 
   return (
@@ -85,7 +82,7 @@ export default function Contact() {
           <div className="contact-decoration">&lt;/&gt;</div>
         </aside>
 
-        <form className="form-card" onSubmit={handleSubmit}>
+        <form className="form-card" onSubmit={handleSubmit} noValidate>
           <div className="form-heading">
             <h2>Send a message</h2>
             <p>Fields marked with * are required.</p>
@@ -101,8 +98,14 @@ export default function Contact() {
                 onChange={handleChange}
                 placeholder="Your name"
                 autoComplete="name"
-                required
+                aria-invalid={errors.name ? "true" : undefined}
+                aria-describedby={errors.name ? "contact-name-error" : undefined}
               />
+              {errors.name && (
+                <p className="field-error" id="contact-name-error">
+                  {errors.name}
+                </p>
+              )}
             </div>
 
             <div className="field">
@@ -115,8 +118,16 @@ export default function Contact() {
                 onChange={handleChange}
                 placeholder="Enter your email"
                 autoComplete="email"
-                required
+                aria-invalid={errors.email ? "true" : undefined}
+                aria-describedby={
+                  errors.email ? "contact-email-error" : undefined
+                }
               />
+              {errors.email && (
+                <p className="field-error" id="contact-email-error">
+                  {errors.email}
+                </p>
+              )}
             </div>
           </div>
 
@@ -128,8 +139,16 @@ export default function Contact() {
               value={form.subject}
               onChange={handleChange}
               placeholder="What is this about?"
-              required
+              aria-invalid={errors.subject ? "true" : undefined}
+              aria-describedby={
+                errors.subject ? "contact-subject-error" : undefined
+              }
             />
+            {errors.subject && (
+              <p className="field-error" id="contact-subject-error">
+                {errors.subject}
+              </p>
+            )}
           </div>
 
           <div className="field">
@@ -141,13 +160,20 @@ export default function Contact() {
               onChange={handleChange}
               placeholder="Write your message here..."
               rows={5}
-              required
+              aria-invalid={errors.message ? "true" : undefined}
+              aria-describedby={
+                errors.message ? "contact-message-error" : undefined
+              }
             />
+            {errors.message && (
+              <p className="field-error" id="contact-message-error">
+                {errors.message}
+              </p>
+            )}
           </div>
 
-          {error && <p className="form-message error">{error}</p>}
           {sent && (
-            <p className="form-message success">
+            <p className="form-message success" role="status">
               Your message passed validation. This demo has not
               sent it to a server.
             </p>

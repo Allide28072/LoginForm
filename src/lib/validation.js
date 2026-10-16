@@ -45,7 +45,3 @@ export function validateContact({ name, email, subject, message }) {
 
   return errors;
 }
-
-export function firstError(errors) {
-  return Object.values(errors)[0] ?? "";
-}
