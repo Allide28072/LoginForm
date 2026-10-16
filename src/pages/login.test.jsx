@@ -163,6 +163,28 @@ describe("Login page", () => {
     ).toBeInTheDocument();
   });
 
+  it("hints at the password rules until an error replaces it", async () => {
+    const user = userEvent.setup();
+    renderLogin();
+
+    const password = screen.getByLabelText(/^password$/i);
+    expect(password).toHaveAttribute(
+      "aria-describedby",
+      "login-password-hint",
+    );
+    expect(screen.getByText("At least 6 characters.")).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: /sign in/i }));
+
+    expect(password).toHaveAttribute(
+      "aria-describedby",
+      "login-password-error",
+    );
+    expect(
+      screen.queryByText("At least 6 characters."),
+    ).not.toBeInTheDocument();
+  });
+
   it("toggles password visibility", async () => {
     const user = userEvent.setup();
     renderLogin();

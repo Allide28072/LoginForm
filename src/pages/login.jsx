@@ -1,7 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import usePageTitle from "../hooks/usePageTitle";
-import { EMAIL_MAX_LENGTH, PASSWORD_MAX_LENGTH, validateLogin } from "../lib/validation";
+import {
+  EMAIL_MAX_LENGTH,
+  PASSWORD_MIN_LENGTH,
+  PASSWORD_MAX_LENGTH,
+  validateLogin,
+} from "../lib/validation";
 import TextField from "../components/TextField";
 
 const fieldIds = {
@@ -102,6 +107,7 @@ export default function Login() {
             error={errors.password}
             disabled={submitting}
             maxLength={PASSWORD_MAX_LENGTH}
+            hint={`At least ${PASSWORD_MIN_LENGTH} characters.`}
             labelAction={
               <button
                 type="button"
