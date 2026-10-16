@@ -50,6 +50,11 @@ export default function Login() {
 
   function handleSubmit(event) {
     event.preventDefault();
+
+    if (submitting) {
+      return;
+    }
+
     setNotice("");
     setSuccess(false);
 

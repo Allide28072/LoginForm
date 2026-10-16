@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import Login from "./login";
@@ -232,6 +232,29 @@ describe("Login page", () => {
       await screen.findByText(/form validated successfully/i),
     ).toBeInTheDocument();
     expect(localStorage.getItem("loginform.rememberedEmail")).toBeNull();
+  });
+
+  it("ignores a repeat submission while one is pending", async () => {
+    localStorage.clear();
+    const setItem = vi.spyOn(Storage.prototype, "setItem");
+    const user = userEvent.setup();
+    renderLogin();
+
+    await user.type(screen.getByLabelText(/email address/i), "me@example.com");
+    await user.type(screen.getByLabelText(/^password$/i), "secret123");
+    await user.click(screen.getByRole("checkbox", { name: /remember me/i }));
+    await user.click(screen.getByRole("button", { name: /sign in/i }));
+
+    fireEvent.submit(screen.getByRole("form", { name: /sign in form/i }));
+
+    expect(
+      await screen.findByText(/form validated successfully/i),
+    ).toBeInTheDocument();
+
+    await new Promise((resolve) => setTimeout(resolve, 50));
+
+    expect(setItem).toHaveBeenCalledTimes(1);
+    setItem.mockRestore();
   });
 
   it("toggles password visibility", async () => {
