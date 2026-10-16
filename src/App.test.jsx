@@ -43,6 +43,14 @@ describe("App routing", () => {
     ).toBeInTheDocument();
   });
 
+  it("redirects the /signin alias to the login page", async () => {
+    renderApp("/signin");
+
+    expect(
+      await screen.findByRole("heading", { name: /sign in to your account/i }),
+    ).toBeInTheDocument();
+  });
+
   it("renders the primary navigation and the footer", async () => {
     renderApp("/");
 
