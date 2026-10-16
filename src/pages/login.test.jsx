@@ -192,9 +192,14 @@ describe("Login page", () => {
     const password = screen.getByLabelText(/^password$/i);
     expect(password).toHaveAttribute("type", "password");
 
-    await user.click(screen.getByRole("button", { name: /show/i }));
+    const toggle = screen.getByRole("button", { name: /show password/i });
+    expect(toggle).toHaveAttribute("aria-pressed", "false");
+
+    await user.click(toggle);
 
     expect(password).toHaveAttribute("type", "text");
+    expect(toggle).toHaveAttribute("aria-pressed", "true");
+    expect(toggle).toHaveAccessibleName(/hide password/i);
   });
 
   it("shows a notice when password recovery is requested", async () => {

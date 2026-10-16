@@ -113,6 +113,8 @@ export default function Login() {
                 type="button"
                 className="text-button"
                 disabled={submitting}
+                aria-pressed={showPassword}
+                aria-label={showPassword ? "Hide password" : "Show password"}
                 onClick={() => setShowPassword((previous) => !previous)}
               >
                 {showPassword ? "Hide" : "Show"}
