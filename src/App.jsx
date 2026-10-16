@@ -1,15 +1,18 @@
+import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/home";
-import About from "./pages/about";
-import Contact from "./pages/contact";
-import Login from "./pages/login";
-import Help from "./pages/help";
-import NotFound from "./pages/notFound";
+import PageLoader from "./components/PageLoader";
 import ScrollToTop from "./components/ScrollToTop";
 import ErrorBoundary from "./components/ErrorBoundary";
 import "./App.css";
+
+const About = lazy(() => import("./pages/about"));
+const Contact = lazy(() => import("./pages/contact"));
+const Login = lazy(() => import("./pages/login"));
+const Help = lazy(() => import("./pages/help"));
+const NotFound = lazy(() => import("./pages/notFound"));
 
 export default function App() {
   return (
@@ -24,14 +27,16 @@ export default function App() {
 
       <main id="main-content" className="main-content" tabIndex={-1}>
         <ErrorBoundary>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/help" element={<Help />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/help" element={<Help />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
         </ErrorBoundary>
       </main>
 
