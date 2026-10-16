@@ -96,6 +96,25 @@ describe("Login page", () => {
     expect(screen.getByLabelText(/email address/i)).toHaveFocus();
   });
 
+  it("accepts an email address wrapped in whitespace", async () => {
+    const user = userEvent.setup();
+    renderLogin();
+
+    await user.type(
+      screen.getByLabelText(/email address/i),
+      "  me@example.com  ",
+    );
+    await user.type(screen.getByLabelText(/^password$/i), "secret123");
+    await user.click(screen.getByRole("button", { name: /sign in/i }));
+
+    expect(
+      await screen.findByText(/form validated successfully/i),
+    ).toBeInTheDocument();
+    expect(screen.getByLabelText(/email address/i)).toHaveValue(
+      "me@example.com",
+    );
+  });
+
   it("requires a password of at least six characters", async () => {
     const user = userEvent.setup();
     renderLogin();

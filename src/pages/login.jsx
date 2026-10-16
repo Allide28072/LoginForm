@@ -42,7 +42,7 @@ export default function Login() {
     setNotice("");
     setSuccess(false);
 
-    const nextErrors = validateLogin({ email, password });
+    const nextErrors = validateLogin({ email: email.trim(), password });
     setErrors(nextErrors);
 
     if (Object.keys(nextErrors).length > 0) {
@@ -50,6 +50,7 @@ export default function Login() {
       return;
     }
 
+    setEmail(email.trim());
     setSubmitting(true);
 
     submitTimer.current = setTimeout(() => {
