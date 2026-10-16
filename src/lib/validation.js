@@ -56,6 +56,12 @@ export function validateContact({ name, email, subject, message }) {
 
   if (!message.trim()) {
     errors.message = "Please write your message.";
+  } else if (message.trim().length < MESSAGE_MIN_LENGTH) {
+    errors.message =
+      `Your message must be at least ${MESSAGE_MIN_LENGTH} characters.`;
+  } else if (message.trim().length > MESSAGE_MAX_LENGTH) {
+    errors.message =
+      `Your message must be at most ${MESSAGE_MAX_LENGTH} characters.`;
   }
 
   return errors;

@@ -126,4 +126,28 @@ describe("validateContact", () => {
 
     expect(errors.email).toMatch(/at most 254 characters/i);
   });
+
+  it("requires at least ten characters of message", () => {
+    const errors = validateContact({
+      ...validMessage,
+      message: "Hi",
+    });
+
+    expect(errors.message).toMatch(/at least 10 characters/i);
+  });
+
+  it("accepts a message of exactly ten characters", () => {
+    expect(
+      validateContact({ ...validMessage, message: "0123456789" }),
+    ).toEqual({});
+  });
+
+  it("rejects a message above 1000 characters", () => {
+    const errors = validateContact({
+      ...validMessage,
+      message: "a".repeat(1001),
+    });
+
+    expect(errors.message).toMatch(/at most 1000 characters/i);
+  });
 });
