@@ -95,3 +95,21 @@ describe("App routing", () => {
     ).toBe(true);
   });
 });
+
+describe("App document titles", () => {
+  it("uses the page title with the site suffix", async () => {
+    renderApp("/help");
+
+    await screen.findByRole("heading", { name: /how can we/i });
+
+    expect(document.title).toBe("Help center | LoginForm");
+  });
+
+  it("titles the not found page", async () => {
+    renderApp("/missing");
+
+    await screen.findByRole("heading", { name: /page not found/i });
+
+    expect(document.title).toBe("Page not found | LoginForm");
+  });
+});
