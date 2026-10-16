@@ -11,11 +11,16 @@ server.
 
 - Multi-page routing with React Router (Home, About, Contact, Login, Help, 404)
 - Client-side validation with inline, field-level error messages
-- Accessible forms with `aria-invalid`, `aria-describedby` and live status messages
-- Collapsible navigation for small screens
+- Field length limits with matching `maxlength` attributes
+- Accessible forms with `aria-invalid`, `aria-describedby`, `aria-required` and live status messages
+- Focus moves to the first invalid field after a failed submission
+- Character counter on the contact message field
+- "Remember me" stores the email address in `localStorage`
+- Search box that filters the help centre questions
+- Collapsible navigation for small screens, with scroll locking and Escape to close
 - Loading and success states while submitting forms
 - Lazy-loaded routes with a suspense fallback
-- Error boundary that keeps the layout usable if a page crashes
+- Error boundary with a collapsible error details block
 - Reduced-motion and keyboard-friendly focus styles
 - Unit and component tests with Vitest and React Testing Library
 
