@@ -12,6 +12,10 @@ function renderLogin() {
 }
 
 describe("Login page", () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
   it("renders the sign in form", () => {
     renderLogin();
 
@@ -201,6 +205,18 @@ describe("Login page", () => {
     expect(localStorage.getItem("loginform.rememberedEmail")).toBe(
       "me@example.com",
     );
+  });
+
+  it("prefills a remembered email address", () => {
+    localStorage.setItem("loginform.rememberedEmail", "saved@example.com");
+    renderLogin();
+
+    expect(screen.getByLabelText(/email address/i)).toHaveValue(
+      "saved@example.com",
+    );
+    expect(
+      screen.getByRole("checkbox", { name: /remember me/i }),
+    ).toBeChecked();
   });
 
   it("toggles password visibility", async () => {

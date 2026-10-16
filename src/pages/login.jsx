@@ -27,10 +27,14 @@ function focusFirstInvalid(errors) {
 export default function Login() {
   usePageTitle("Sign in");
 
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(
+    () => localStorage.getItem(REMEMBERED_EMAIL_KEY) ?? "",
+  );
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [remember, setRemember] = useState(false);
+  const [remember, setRemember] = useState(() =>
+    Boolean(localStorage.getItem(REMEMBERED_EMAIL_KEY)),
+  );
   const [errors, setErrors] = useState({});
   const [notice, setNotice] = useState("");
   const [success, setSuccess] = useState(false);
