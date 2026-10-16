@@ -28,7 +28,7 @@ export default function Footer() {
       </div>
 
       <div className="footer-bottom">
-        <span>© 2026 LoginForm</span>
+        <span>© {new Date().getFullYear()} LoginForm</span>
       </div>
     </footer>
   );

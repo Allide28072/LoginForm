@@ -47,6 +47,15 @@ describe("Footer", () => {
     expect(screen.getByText(/© \d{4} LoginForm/)).toBeInTheDocument();
   });
 
+  it("renders the current year in the copyright line", () => {
+    renderFooter();
+
+    const year = String(new Date().getFullYear());
+    expect(
+      screen.getByText(new RegExp(`©\\s*${year} LoginForm`)),
+    ).toBeInTheDocument();
+  });
+
   it("links to the contact page", () => {
     renderFooter();
 
