@@ -2,12 +2,15 @@ export default function TextField({
   id,
   label,
   error,
+  hint,
   labelAction,
   as = "input",
   ...inputProps
 }) {
   const Element = as === "textarea" ? "textarea" : "input";
+  const hintId = hint ? `${id}-hint` : undefined;
   const errorId = error ? `${id}-error` : undefined;
+  const describedBy = [hintId, errorId].filter(Boolean).join(" ") || undefined;
 
   return (
     <div className="field">
@@ -23,9 +26,15 @@ export default function TextField({
       <Element
         id={id}
         aria-invalid={error ? "true" : undefined}
-        aria-describedby={errorId}
+        aria-describedby={describedBy}
         {...inputProps}
       />
+
+      {hint && !error && (
+        <p className="field-hint" id={hintId}>
+          {hint}
+        </p>
+      )}
 
       {error && (
         <p className="field-error" id={errorId}>
