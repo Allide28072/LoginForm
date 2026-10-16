@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import usePageTitle from "../hooks/usePageTitle";
-import { firstError, validateLogin } from "../lib/validation";
+import { validateLogin } from "../lib/validation";
 
 export default function Login() {
   usePageTitle("Sign in");
@@ -10,18 +10,24 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [remember, setRemember] = useState(false);
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState({});
+  const [notice, setNotice] = useState("");
   const [success, setSuccess] = useState(false);
+
+  function clearFieldError(field) {
+    setErrors((previous) => ({ ...previous, [field]: "" }));
+    setSuccess(false);
+  }
 
   function handleSubmit(event) {
     event.preventDefault();
-    setError("");
+    setNotice("");
     setSuccess(false);
 
-    const message = firstError(validateLogin({ email, password }));
+    const nextErrors = validateLogin({ email, password });
+    setErrors(nextErrors);
 
-    if (message) {
-      setError(message);
+    if (Object.keys(nextErrors).length > 0) {
       return;
     }
 
@@ -39,7 +45,7 @@ export default function Login() {
           Enter your details below to continue.
         </p>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} noValidate>
           <div className="field">
             <label htmlFor="login-email">Email address</label>
             <input
@@ -48,13 +54,18 @@ export default function Login() {
               autoComplete="email"
               placeholder="you@example.com"
               value={email}
+              aria-invalid={errors.email ? "true" : undefined}
+              aria-describedby={errors.email ? "login-email-error" : undefined}
               onChange={(event) => {
                 setEmail(event.target.value);
-                setError("");
-                setSuccess(false);
+                clearFieldError("email");
               }}
-              required
             />
+            {errors.email && (
+              <p className="field-error" id="login-email-error">
+                {errors.email}
+              </p>
+            )}
           </div>
 
           <div className="field">
@@ -75,13 +86,20 @@ export default function Login() {
               autoComplete="current-password"
               placeholder="Enter your password"
               value={password}
+              aria-invalid={errors.password ? "true" : undefined}
+              aria-describedby={
+                errors.password ? "login-password-error" : undefined
+              }
               onChange={(event) => {
                 setPassword(event.target.value);
-                setError("");
-                setSuccess(false);
+                clearFieldError("password");
               }}
-              required
             />
+            {errors.password && (
+              <p className="field-error" id="login-password-error">
+                {errors.password}
+              </p>
+            )}
           </div>
 
           <div className="login-options">
@@ -97,17 +115,19 @@ export default function Login() {
             <button
               type="button"
               className="text-button"
-              onClick={() =>
-                setError("Password recovery is not connected yet.")
-              }
+              onClick={() => {
+                setErrors({});
+                setSuccess(false);
+                setNotice("Password recovery is not connected yet.");
+              }}
             >
               Forgot password?
             </button>
           </div>
 
-          {error && <p className="form-message error">{error}</p>}
+          {notice && <p className="form-message">{notice}</p>}
           {success && (
-            <p className="form-message success">
+            <p className="form-message success" role="status">
               Form validated successfully. Authentication is not
               connected yet.
             </p>

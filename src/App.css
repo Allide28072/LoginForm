@@ -929,6 +929,25 @@ p {
   box-shadow: 0 0 0 4px #6366f114;
 }
 
+.field input[aria-invalid="true"],
+.field textarea[aria-invalid="true"] {
+  border-color: #fca5a5;
+  background: #fff7f7;
+}
+
+.field input[aria-invalid="true"]:focus,
+.field textarea[aria-invalid="true"]:focus {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 4px #ef444414;
+}
+
+.field-error {
+  margin: -3px 0 0;
+  color: #dc2626;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
 .form-message {
   margin: 0 0 18px;
   font-size: 12px;
