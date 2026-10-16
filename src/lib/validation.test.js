@@ -118,6 +118,21 @@ describe("validateContact", () => {
     expect(errors.email).toMatch(/valid email/i);
   });
 
+  it("rejects a name above 80 characters", () => {
+    const errors = validateContact({
+      ...validMessage,
+      name: "a".repeat(81),
+    });
+
+    expect(errors.name).toMatch(/at most 80 characters/i);
+  });
+
+  it("accepts a name of exactly 80 characters", () => {
+    expect(
+      validateContact({ ...validMessage, name: "a".repeat(80) }),
+    ).toEqual({});
+  });
+
   it("flags an email address above 254 characters", () => {
     const errors = validateContact({
       ...validMessage,

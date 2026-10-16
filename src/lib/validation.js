@@ -46,6 +46,9 @@ export function validateContact({ name, email, subject, message }) {
 
   if (!name.trim()) {
     errors.name = "Please enter your full name.";
+  } else if (name.trim().length > NAME_MAX_LENGTH) {
+    errors.name =
+      `Your name must be at most ${NAME_MAX_LENGTH} characters.`;
   }
 
   validateEmailField(errors, email, "Please enter a valid email address.");
