@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import usePageTitle from "../hooks/usePageTitle";
 import { validateLogin } from "../lib/validation";
+import TextField from "../components/TextField";
 
 export default function Login() {
   usePageTitle("Sign in");
@@ -55,31 +56,29 @@ export default function Login() {
         </p>
 
         <form onSubmit={handleSubmit} noValidate>
-          <div className="field">
-            <label htmlFor="login-email">Email address</label>
-            <input
-              id="login-email"
-              type="email"
-              autoComplete="email"
-              placeholder="you@example.com"
-              value={email}
-              aria-invalid={errors.email ? "true" : undefined}
-              aria-describedby={errors.email ? "login-email-error" : undefined}
-              onChange={(event) => {
-                setEmail(event.target.value);
-                clearFieldError("email");
-              }}
-            />
-            {errors.email && (
-              <p className="field-error" id="login-email-error">
-                {errors.email}
-              </p>
-            )}
-          </div>
+          <TextField
+            id="login-email"
+            label="Email address"
+            type="email"
+            autoComplete="email"
+            placeholder="you@example.com"
+            value={email}
+            error={errors.email}
+            onChange={(event) => {
+              setEmail(event.target.value);
+              clearFieldError("email");
+            }}
+          />
 
-          <div className="field">
-            <div className="password-label">
-              <label htmlFor="login-password">Password</label>
+          <TextField
+            id="login-password"
+            label="Password"
+            type={showPassword ? "text" : "password"}
+            autoComplete="current-password"
+            placeholder="Enter your password"
+            value={password}
+            error={errors.password}
+            labelAction={
               <button
                 type="button"
                 className="text-button"
@@ -87,29 +86,12 @@ export default function Login() {
               >
                 {showPassword ? "Hide" : "Show"}
               </button>
-            </div>
-
-            <input
-              id="login-password"
-              type={showPassword ? "text" : "password"}
-              autoComplete="current-password"
-              placeholder="Enter your password"
-              value={password}
-              aria-invalid={errors.password ? "true" : undefined}
-              aria-describedby={
-                errors.password ? "login-password-error" : undefined
-              }
-              onChange={(event) => {
-                setPassword(event.target.value);
-                clearFieldError("password");
-              }}
-            />
-            {errors.password && (
-              <p className="field-error" id="login-password-error">
-                {errors.password}
-              </p>
-            )}
-          </div>
+            }
+            onChange={(event) => {
+              setPassword(event.target.value);
+              clearFieldError("password");
+            }}
+          />
 
           <div className="login-options">
             <label className="remember-option">
