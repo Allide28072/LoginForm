@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import usePageTitle from "../hooks/usePageTitle";
-import { validateLogin } from "../lib/validation";
+import { EMAIL_MAX_LENGTH, PASSWORD_MAX_LENGTH, validateLogin } from "../lib/validation";
 import TextField from "../components/TextField";
 
 const fieldIds = {
@@ -85,6 +85,7 @@ export default function Login() {
             value={email}
             error={errors.email}
             disabled={submitting}
+            maxLength={EMAIL_MAX_LENGTH}
             onChange={(event) => {
               setEmail(event.target.value);
               clearFieldError("email");
@@ -100,6 +101,7 @@ export default function Login() {
             value={password}
             error={errors.password}
             disabled={submitting}
+            maxLength={PASSWORD_MAX_LENGTH}
             labelAction={
               <button
                 type="button"

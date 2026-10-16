@@ -20,6 +20,14 @@ describe("Login page", () => {
     ).toBeInTheDocument();
     expect(screen.getByLabelText(/email address/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/^password$/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/email address/i)).toHaveAttribute(
+      "maxlength",
+      "254",
+    );
+    expect(screen.getByLabelText(/^password$/i)).toHaveAttribute(
+      "maxlength",
+      "128",
+    );
   });
 
   it("reports missing email and password", async () => {
