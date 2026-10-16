@@ -37,13 +37,16 @@ server.
 src/
   components/   Navbar, Footer, TextField, ErrorBoundary, PageLoader, ScrollToTop
   hooks/        usePageTitle
-  lib/          validation helpers
+  lib/          validation helpers and shared field limits
   pages/        home, about, contact, login, help, notFound
   test/         Vitest setup file
   App.jsx       routing, layout and shared shell
   index.css     global resets and base typography
   App.css       page and component styles
 ```
+
+Routes: `/`, `/about`, `/contact`, `/login` (also `/signin`), `/help`, and a
+catch-all 404 page. Component tests sit beside the files they cover.
 
 ## Getting started
 
