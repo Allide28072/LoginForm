@@ -25,4 +25,15 @@ describe("usePageTitle", () => {
 
     expect(document.title).toBe("About | LoginForm");
   });
+
+  it("restores the previous title when it unmounts", () => {
+    document.title = "Original title";
+
+    const { unmount } = renderHook(() => usePageTitle("Sign in"));
+    expect(document.title).toBe("Sign in | LoginForm");
+
+    unmount();
+
+    expect(document.title).toBe("Original title");
+  });
 });
