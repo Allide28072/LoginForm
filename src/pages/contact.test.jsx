@@ -33,6 +33,27 @@ describe("Contact page", () => {
     }
   });
 
+  it("updates the message character counter while typing", async () => {
+    const user = userEvent.setup();
+    renderContact();
+
+    const counter = document.getElementById("contact-message-counter");
+    expect(counter).toHaveTextContent("0/1000");
+
+    await user.type(screen.getByLabelText(/message/i), "Hello");
+
+    expect(counter).toHaveTextContent("5/1000");
+  });
+
+  it("limits the message field to the maximum length", () => {
+    renderContact();
+
+    expect(screen.getByLabelText(/message/i)).toHaveAttribute(
+      "maxlength",
+      "1000",
+    );
+  });
+
   it("reports every empty field", async () => {
     const user = userEvent.setup();
     renderContact();
