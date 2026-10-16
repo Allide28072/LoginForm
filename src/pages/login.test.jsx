@@ -32,6 +32,14 @@ describe("Login page", () => {
       "maxlength",
       "128",
     );
+    expect(screen.getByLabelText(/email address/i)).toHaveAttribute(
+      "spellcheck",
+      "false",
+    );
+    expect(screen.getByLabelText(/email address/i)).toHaveAttribute(
+      "autocapitalize",
+      "none",
+    );
   });
 
   it("reports missing email and password", async () => {

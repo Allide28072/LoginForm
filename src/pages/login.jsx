@@ -108,6 +108,8 @@ export default function Login() {
             error={errors.email}
             disabled={submitting}
             maxLength={EMAIL_MAX_LENGTH}
+            spellCheck={false}
+            autoCapitalize="none"
             onChange={(event) => {
               setEmail(event.target.value);
               clearFieldError("email");
