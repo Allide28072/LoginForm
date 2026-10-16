@@ -109,6 +109,18 @@ describe("validateContact", () => {
     ]);
   });
 
+  it.each(["name", "email", "subject", "message"])(
+    "treats a whitespace-only %s as empty",
+    (field) => {
+      const errors = validateContact({
+        ...validMessage,
+        [field]: "    ",
+      });
+
+      expect(errors[field]).toBeDefined();
+    },
+  );
+
   it("flags an invalid email address", () => {
     const errors = validateContact({
       ...validMessage,
