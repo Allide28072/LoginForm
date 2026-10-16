@@ -7,11 +7,14 @@ import Contact from "./pages/contact";
 import Login from "./pages/login";
 import Help from "./pages/help";
 import NotFound from "./pages/notFound";
+import ScrollToTop from "./components/ScrollToTop";
 import "./App.css";
 
 export default function App() {
   return (
     <>
+      <ScrollToTop />
+
       <a className="skip-link" href="#main-content">
         Skip to main content
       </a>
