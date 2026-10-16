@@ -44,6 +44,15 @@ describe("validateLogin", () => {
     expect(errors.email).toMatch(/valid email/i);
   });
 
+  it("rejects an email address above 254 characters", () => {
+    const errors = validateLogin({
+      email: `${"a".repeat(250)}@example.com`,
+      password: "secret123",
+    });
+
+    expect(errors.email).toMatch(/at most 254 characters/i);
+  });
+
   it("requires at least six characters of password", () => {
     const errors = validateLogin({
       email: "person@example.com",
@@ -107,5 +116,14 @@ describe("validateContact", () => {
     });
 
     expect(errors.email).toMatch(/valid email/i);
+  });
+
+  it("flags an email address above 254 characters", () => {
+    const errors = validateContact({
+      ...validMessage,
+      email: `${"a".repeat(250)}@example.com`,
+    });
+
+    expect(errors.email).toMatch(/at most 254 characters/i);
   });
 });

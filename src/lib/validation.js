@@ -12,14 +12,21 @@ export function isValidEmail(value) {
   return EMAIL_PATTERN.test(value.trim());
 }
 
-export function validateLogin({ email, password }) {
-  const errors = {};
-
+function validateEmailField(errors, email, invalidMessage) {
   if (!email.trim()) {
     errors.email = "Please enter your email address.";
   } else if (!isValidEmail(email)) {
-    errors.email = "Enter a valid email address.";
+    errors.email = invalidMessage;
+  } else if (email.trim().length > EMAIL_MAX_LENGTH) {
+    errors.email =
+      `Your email address must be at most ${EMAIL_MAX_LENGTH} characters.`;
   }
+}
+
+export function validateLogin({ email, password }) {
+  const errors = {};
+
+  validateEmailField(errors, email, "Enter a valid email address.");
 
   if (!password) {
     errors.password = "Please enter your password.";
@@ -41,11 +48,7 @@ export function validateContact({ name, email, subject, message }) {
     errors.name = "Please enter your full name.";
   }
 
-  if (!email.trim()) {
-    errors.email = "Please enter your email address.";
-  } else if (!isValidEmail(email)) {
-    errors.email = "Please enter a valid email address.";
-  }
+  validateEmailField(errors, email, "Please enter a valid email address.");
 
   if (!subject.trim()) {
     errors.subject = "Please add a subject.";
