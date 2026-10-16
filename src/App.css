@@ -812,6 +812,10 @@ p {
   margin-top: 26px;
 }
 
+.not-found > .button {
+  margin-top: 24px;
+}
+
 .error-boundary {
   max-width: 620px;
   padding: 70px 0;
