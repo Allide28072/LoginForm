@@ -781,6 +781,24 @@ p {
   margin-top: 26px;
 }
 
+.error-boundary {
+  max-width: 620px;
+  padding: 70px 0;
+}
+
+.error-boundary h1 {
+  margin: 16px 0;
+  color: #191b2b;
+  font-size: clamp(30px, 4vw, 44px);
+  letter-spacing: -1.5px;
+}
+
+.error-boundary > p {
+  margin: 0 0 26px;
+  color: #73798b;
+  font-size: 14px;
+}
+
 /* =========================
    ABOUT PAGE
 ========================= */
