@@ -55,6 +55,9 @@ export function validateContact({ name, email, subject, message }) {
 
   if (!subject.trim()) {
     errors.subject = "Please add a subject.";
+  } else if (subject.trim().length > SUBJECT_MAX_LENGTH) {
+    errors.subject =
+      `Your subject must be at most ${SUBJECT_MAX_LENGTH} characters.`;
   }
 
   if (!message.trim()) {

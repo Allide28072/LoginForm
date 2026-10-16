@@ -133,6 +133,15 @@ describe("validateContact", () => {
     ).toEqual({});
   });
 
+  it("rejects a subject above 120 characters", () => {
+    const errors = validateContact({
+      ...validMessage,
+      subject: "a".repeat(121),
+    });
+
+    expect(errors.subject).toMatch(/at most 120 characters/i);
+  });
+
   it("flags an email address above 254 characters", () => {
     const errors = validateContact({
       ...validMessage,
