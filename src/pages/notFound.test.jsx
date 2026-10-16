@@ -29,4 +29,12 @@ describe("NotFound page", () => {
       screen.getByRole("link", { name: /back to home/i }),
     ).toHaveAttribute("href", "/");
   });
+
+  it("offers a link to the help center", () => {
+    renderNotFound();
+
+    expect(
+      screen.getByRole("link", { name: /visit the help center/i }),
+    ).toHaveAttribute("href", "/help");
+  });
 });

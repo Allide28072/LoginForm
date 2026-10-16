@@ -12,9 +12,14 @@ export default function NotFound() {
         The page you are looking for does not exist or may have been
         moved. Head back to the homepage to keep exploring.
       </p>
-      <Link to="/" className="button button-primary">
-        Back to home <span aria-hidden="true">→</span>
-      </Link>
+      <div className="not-found-actions">
+        <Link to="/" className="button button-primary">
+          Back to home <span aria-hidden="true">→</span>
+        </Link>
+        <Link to="/help" className="button button-outline">
+          Visit the help center
+        </Link>
+      </div>
     </div>
   );
 }
