@@ -87,6 +87,15 @@ describe("Login page", () => {
     expect(screen.getByText(/valid email address/i)).toBeInTheDocument();
   });
 
+  it("focuses the first invalid field after a failed submit", async () => {
+    const user = userEvent.setup();
+    renderLogin();
+
+    await user.click(screen.getByRole("button", { name: /sign in/i }));
+
+    expect(screen.getByLabelText(/email address/i)).toHaveFocus();
+  });
+
   it("requires a password of at least six characters", async () => {
     const user = userEvent.setup();
     renderLogin();

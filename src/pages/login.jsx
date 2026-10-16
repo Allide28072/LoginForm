@@ -4,6 +4,19 @@ import usePageTitle from "../hooks/usePageTitle";
 import { validateLogin } from "../lib/validation";
 import TextField from "../components/TextField";
 
+const fieldIds = {
+  email: "login-email",
+  password: "login-password",
+};
+
+function focusFirstInvalid(errors) {
+  const firstField = Object.keys(fieldIds).find((field) => errors[field]);
+
+  if (firstField) {
+    document.getElementById(fieldIds[firstField])?.focus();
+  }
+}
+
 export default function Login() {
   usePageTitle("Sign in");
 
@@ -33,6 +46,7 @@ export default function Login() {
     setErrors(nextErrors);
 
     if (Object.keys(nextErrors).length > 0) {
+      focusFirstInvalid(nextErrors);
       return;
     }
 
