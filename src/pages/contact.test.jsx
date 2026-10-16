@@ -97,6 +97,15 @@ describe("Contact page", () => {
     expect(screen.getByText(/write your message/i)).toBeInTheDocument();
   });
 
+  it("focuses the first invalid field after a failed submit", async () => {
+    const user = userEvent.setup();
+    renderContact();
+
+    await user.click(screen.getByRole("button", { name: /send message/i }));
+
+    expect(screen.getByLabelText(/full name/i)).toHaveFocus();
+  });
+
   it("rejects an invalid email address", async () => {
     const user = userEvent.setup();
     renderContact();

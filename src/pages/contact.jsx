@@ -10,6 +10,21 @@ const emptyForm = {
   message: "",
 };
 
+const fieldIds = {
+  name: "contact-name",
+  email: "contact-email",
+  subject: "contact-subject",
+  message: "contact-message",
+};
+
+function focusFirstInvalid(errors) {
+  const firstField = Object.keys(fieldIds).find((field) => errors[field]);
+
+  if (firstField) {
+    document.getElementById(fieldIds[firstField])?.focus();
+  }
+}
+
 export default function Contact() {
   usePageTitle("Contact");
 
@@ -53,6 +68,7 @@ export default function Contact() {
     setErrors(nextErrors);
 
     if (Object.keys(nextErrors).length > 0) {
+      focusFirstInvalid(nextErrors);
       return;
     }
 
