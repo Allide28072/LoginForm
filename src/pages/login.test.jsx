@@ -157,5 +157,8 @@ describe("Login page", () => {
     expect(
       screen.getByText(/password recovery is not connected yet/i),
     ).toHaveClass("notice");
+    expect(
+      screen.getByRole("status"),
+    ).toHaveTextContent(/password recovery is not connected yet/i);
   });
 });
