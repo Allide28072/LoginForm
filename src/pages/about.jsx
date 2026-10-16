@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import usePageTitle from "../hooks/usePageTitle";
 
 const skills = [
   "HTML & CSS",
@@ -10,6 +11,8 @@ const skills = [
 ];
 
 export default function About() {
+  usePageTitle("About");
+
   return (
     <div className="page-container">
       <section className="page-hero">

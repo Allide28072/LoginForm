@@ -1,6 +1,9 @@
 import { useState } from "react";
+import usePageTitle from "../hooks/usePageTitle";
 
 export default function Contact() {
+  usePageTitle("Contact");
+
   const [form, setForm] = useState({
     name: "",
     email: "",

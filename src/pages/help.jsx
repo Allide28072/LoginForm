@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import usePageTitle from "../hooks/usePageTitle";
 
 const questions = [
   {
@@ -30,6 +31,8 @@ const questions = [
 ];
 
 export default function Help() {
+  usePageTitle("Help center");
+
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
