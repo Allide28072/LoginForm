@@ -1015,6 +1015,13 @@ p {
   line-height: 1.6;
 }
 
+.field-counter {
+  margin: -10px 0 20px;
+  text-align: right;
+  color: #6b7280;
+  font-size: 11px;
+}
+
 .form-message {
   margin: 0 0 18px;
   font-size: 12px;
