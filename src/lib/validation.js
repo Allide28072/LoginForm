@@ -26,6 +26,9 @@ export function validateLogin({ email, password }) {
   } else if (password.length < PASSWORD_MIN_LENGTH) {
     errors.password =
       `Your password must be at least ${PASSWORD_MIN_LENGTH} characters.`;
+  } else if (password.length > PASSWORD_MAX_LENGTH) {
+    errors.password =
+      `Your password must be at most ${PASSWORD_MAX_LENGTH} characters.`;
   }
 
   return errors;

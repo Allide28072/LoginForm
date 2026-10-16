@@ -52,6 +52,24 @@ describe("validateLogin", () => {
 
     expect(errors.password).toMatch(/6 characters/i);
   });
+
+  it("rejects a password above the maximum length", () => {
+    const errors = validateLogin({
+      email: "person@example.com",
+      password: "a".repeat(129),
+    });
+
+    expect(errors.password).toMatch(/at most 128 characters/i);
+  });
+
+  it("accepts a password at the maximum length", () => {
+    expect(
+      validateLogin({
+        email: "person@example.com",
+        password: "a".repeat(128),
+      }),
+    ).toEqual({});
+  });
 });
 
 describe("validateContact", () => {
