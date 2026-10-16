@@ -65,6 +65,26 @@ describe("Contact page", () => {
     expect(name).toHaveValue("Aline");
   });
 
+  it("disables the fields while the message is being sent", async () => {
+    const user = userEvent.setup();
+    renderContact();
+
+    await user.type(screen.getByLabelText(/full name/i), "Aline");
+    await user.type(screen.getByLabelText(/email address/i), "aline@example.com");
+    await user.type(screen.getByLabelText(/subject/i), "Hello");
+    await user.type(screen.getByLabelText(/message/i), "A question");
+
+    await user.click(screen.getByRole("button", { name: /send message/i }));
+
+    expect(screen.getByLabelText(/full name/i)).toBeDisabled();
+    expect(screen.getByLabelText(/message/i)).toBeDisabled();
+
+    expect(
+      await screen.findByText(/passed validation/i),
+    ).toBeInTheDocument();
+    expect(screen.getByLabelText(/full name/i)).toBeEnabled();
+  });
+
   it("reports every empty field", async () => {
     const user = userEvent.setup();
     renderContact();

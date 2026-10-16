@@ -108,6 +108,7 @@ export default function Contact() {
           className="form-card"
           onSubmit={handleSubmit}
           onBlur={handleBlur}
+          aria-busy={sending}
           noValidate
         >
           <div className="form-heading">
@@ -125,6 +126,7 @@ export default function Contact() {
               onChange={handleChange}
               placeholder="Your name"
               autoComplete="name"
+              disabled={sending}
               required
             />
 
@@ -138,6 +140,7 @@ export default function Contact() {
               onChange={handleChange}
               placeholder="Enter your email"
               autoComplete="email"
+              disabled={sending}
               required
             />
           </div>
@@ -150,6 +153,7 @@ export default function Contact() {
             error={errors.subject}
             onChange={handleChange}
             placeholder="What is this about?"
+            disabled={sending}
             required
           />
 
@@ -164,6 +168,7 @@ export default function Contact() {
             placeholder="Write your message here..."
             rows={5}
             maxLength={MESSAGE_MAX_LENGTH}
+            disabled={sending}
             required
           />
 
