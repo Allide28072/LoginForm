@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
@@ -96,5 +96,52 @@ describe("Navbar", () => {
 
     await user.click(screen.getByRole("button", { name: /close menu/i }));
     expect(document.body.style.overflow).toBe("");
+  });
+
+  it("closes the menu when the viewport grows to desktop size", async () => {
+    const originalWidth = window.innerWidth;
+    const user = userEvent.setup();
+    renderNavbar();
+
+    await user.click(screen.getByRole("button", { name: /open menu/i }));
+    expect(screen.getByRole("navigation")).toHaveClass("open");
+
+    Object.defineProperty(window, "innerWidth", {
+      configurable: true,
+      writable: true,
+      value: 1024,
+    });
+    fireEvent(window, new Event("resize"));
+
+    expect(screen.getByRole("navigation")).not.toHaveClass("open");
+
+    Object.defineProperty(window, "innerWidth", {
+      configurable: true,
+      writable: true,
+      value: originalWidth,
+    });
+  });
+
+  it("keeps the menu open when a small viewport is resized", async () => {
+    const originalWidth = window.innerWidth;
+    const user = userEvent.setup();
+    renderNavbar();
+
+    await user.click(screen.getByRole("button", { name: /open menu/i }));
+
+    Object.defineProperty(window, "innerWidth", {
+      configurable: true,
+      writable: true,
+      value: 480,
+    });
+    fireEvent(window, new Event("resize"));
+
+    expect(screen.getByRole("navigation")).toHaveClass("open");
+
+    Object.defineProperty(window, "innerWidth", {
+      configurable: true,
+      writable: true,
+      value: originalWidth,
+    });
   });
 });

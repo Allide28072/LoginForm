@@ -44,6 +44,17 @@ export default function Navbar() {
     };
   }, [menuOpen]);
 
+  useEffect(() => {
+    if (!menuOpen) return undefined;
+
+    function handleResize() {
+      if (window.innerWidth > 760) setMenuOpen(false);
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [menuOpen]);
+
   return (
     <header className="navbar">
       <div className="nav-inner">
