@@ -59,6 +59,7 @@ Open the printed local URL in your browser.
 | `npm run lint`      | Run ESLint over the project          |
 | `npm test`          | Run the test suite once              |
 | `npm run test:watch`| Run tests in watch mode              |
+| `npm run verify`    | Run lint, tests and a production build |
 
 ## Notes
 
