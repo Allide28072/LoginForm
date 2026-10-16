@@ -10,7 +10,7 @@ export default function TextField({
   const Element = as === "textarea" ? "textarea" : "input";
   const hintId = hint ? `${id}-hint` : undefined;
   const errorId = error ? `${id}-error` : undefined;
-  const describedBy = [hintId, errorId].filter(Boolean).join(" ") || undefined;
+  const describedBy = errorId ?? hintId;
 
   return (
     <div className="field">

@@ -85,4 +85,33 @@ describe("TextField", () => {
     expect(onClick).toHaveBeenCalledTimes(1);
     expect(screen.getByLabelText("Password")).toBeInTheDocument();
   });
+
+  it("describes the control with its hint", () => {
+    render(
+      <TextField id="email" label="Email address" hint="We never share it." />,
+    );
+
+    const input = screen.getByLabelText("Email address");
+    expect(input).toHaveAttribute("aria-describedby", "email-hint");
+
+    const hint = screen.getByText("We never share it.");
+    expect(hint).toHaveAttribute("id", "email-hint");
+    expect(hint).toHaveClass("field-hint");
+  });
+
+  it("describes the control with both hint and error", () => {
+    render(
+      <TextField
+        id="email"
+        label="Email address"
+        hint="We never share it."
+        error="Enter a valid email."
+      />,
+    );
+
+    const input = screen.getByLabelText("Email address");
+    expect(input).toHaveAttribute("aria-describedby", "email-error");
+    expect(screen.queryByText("We never share it.")).not.toBeInTheDocument();
+    expect(screen.getByText("Enter a valid email.")).toBeInTheDocument();
+  });
 });
