@@ -47,6 +47,22 @@ describe("Navbar", () => {
     );
   });
 
+  it("exposes the current route with aria-current", () => {
+    render(
+      <MemoryRouter initialEntries={["/help"]}>
+        <Navbar />
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByRole("link", { name: "Help" })).toHaveAttribute(
+      "aria-current",
+      "page",
+    );
+    expect(screen.getByRole("link", { name: "Home" })).not.toHaveAttribute(
+      "aria-current",
+    );
+  });
+
   it("toggles the mobile menu with the menu button", async () => {
     const user = userEvent.setup();
     renderNavbar();
