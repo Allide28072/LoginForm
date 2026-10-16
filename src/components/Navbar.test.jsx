@@ -122,6 +122,18 @@ describe("Navbar", () => {
     });
   });
 
+  it("closes the menu when Escape is pressed", async () => {
+    const user = userEvent.setup();
+    renderNavbar();
+
+    await user.click(screen.getByRole("button", { name: /open menu/i }));
+    expect(screen.getByRole("navigation")).toHaveClass("open");
+
+    await user.keyboard("{Escape}");
+
+    expect(screen.getByRole("navigation")).not.toHaveClass("open");
+  });
+
   it("keeps the menu open when a small viewport is resized", async () => {
     const originalWidth = window.innerWidth;
     const user = userEvent.setup();
