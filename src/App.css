@@ -156,6 +156,46 @@ p {
   color: #4f46e5;
 }
 
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 1px solid #e4e5ef;
+  border-radius: 9px;
+  background: #ffffff;
+  transition: border-color 0.2s;
+}
+
+.nav-toggle:hover {
+  border-color: #c7d2fe;
+}
+
+.nav-toggle-bar {
+  display: block;
+  width: 18px;
+  height: 2px;
+  border-radius: 3px;
+  background: #292b3d;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
 /* =========================
    SHARED BUTTONS
 ========================= */
@@ -1396,26 +1436,45 @@ p {
 
   .brand {
     font-size: 16px;
+    order: 1;
   }
 
   .nav-login {
+    order: 2;
     margin-left: auto;
   }
 
-  .nav-links {
+  .nav-toggle {
+    display: flex;
     order: 3;
+    margin-left: 12px;
+  }
+
+  .nav-links {
+    order: 4;
+    display: none;
     width: 100%;
-    justify-content: space-between;
-    gap: 10px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 2px;
+    padding-top: 10px;
+    border-top: 1px solid #e9eaf1;
+  }
+
+  .nav-links.open {
+    display: flex;
   }
 
   .nav-link {
-    padding: 10px 0;
-    font-size: 12px;
+    padding: 12px 4px;
+    font-size: 13px;
   }
 
   .nav-link.active::after {
-    bottom: 2px;
+    right: auto;
+    bottom: 8px;
+    left: 4px;
+    width: 22px;
   }
 
   .hero {
