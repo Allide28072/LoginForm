@@ -1022,6 +1022,13 @@ p {
   font-size: 11px;
 }
 
+.field-hint {
+  margin: -3px 0 0;
+  color: #6b7280;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
 .form-message {
   margin: 0 0 18px;
   font-size: 12px;
