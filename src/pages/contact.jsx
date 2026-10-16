@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import usePageTitle from "../hooks/usePageTitle";
 import { validateContact } from "../lib/validation";
 
@@ -16,6 +16,10 @@ export default function Contact() {
 
   const [errors, setErrors] = useState({});
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const sendTimer = useRef(null);
+
+  useEffect(() => () => clearTimeout(sendTimer.current), []);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -39,8 +43,13 @@ export default function Contact() {
       return;
     }
 
-    setSent(true);
-    setForm(emptyForm);
+    setSending(true);
+
+    sendTimer.current = setTimeout(() => {
+      setSending(false);
+      setSent(true);
+      setForm(emptyForm);
+    }, 700);
   }
 
   return (
@@ -179,8 +188,19 @@ export default function Contact() {
             </p>
           )}
 
-          <button className="button button-primary form-submit" type="submit">
-            Send message <span>→</span>
+          <button
+            className="button button-primary form-submit"
+            type="submit"
+            disabled={sending}
+          >
+            {sending ? (
+              <>
+                <span className="spinner" aria-hidden="true" />
+                Sending…
+              </>
+            ) : (
+              <>Send message <span>→</span></>
+            )}
           </button>
         </form>
       </section>
