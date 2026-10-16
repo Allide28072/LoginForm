@@ -36,6 +36,25 @@ describe("Login page", () => {
     ).toBeInTheDocument();
   });
 
+  it("marks the form aria-busy while submitting", async () => {
+    const user = userEvent.setup();
+    renderLogin();
+
+    const form = screen.getByRole("form", { name: /sign in form/i });
+    expect(form).toHaveAttribute("aria-busy", "false");
+
+    await user.type(screen.getByLabelText(/email address/i), "me@example.com");
+    await user.type(screen.getByLabelText(/^password$/i), "secret123");
+    await user.click(screen.getByRole("button", { name: /sign in/i }));
+
+    expect(form).toHaveAttribute("aria-busy", "true");
+
+    expect(
+      await screen.findByText(/form validated successfully/i),
+    ).toBeInTheDocument();
+    expect(form).toHaveAttribute("aria-busy", "false");
+  });
+
   it("rejects an invalid email address", async () => {
     const user = userEvent.setup();
     renderLogin();

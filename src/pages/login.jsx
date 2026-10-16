@@ -55,7 +55,12 @@ export default function Login() {
           Enter your details below to continue.
         </p>
 
-        <form onSubmit={handleSubmit} noValidate>
+        <form
+          onSubmit={handleSubmit}
+          aria-label="Sign in form"
+          aria-busy={submitting}
+          noValidate
+        >
           <TextField
             id="login-email"
             label="Email address"
