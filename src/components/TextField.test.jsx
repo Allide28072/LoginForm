@@ -86,6 +86,21 @@ describe("TextField", () => {
     expect(screen.getByLabelText("Password")).toBeInTheDocument();
   });
 
+  it("marks the control as required when asked", () => {
+    const { rerender } = render(<TextField id="name" label="Full name" />);
+
+    expect(screen.getByLabelText("Full name")).not.toHaveAttribute(
+      "aria-required",
+    );
+
+    rerender(<TextField id="name" label="Full name" required />);
+
+    expect(screen.getByLabelText("Full name")).toHaveAttribute(
+      "aria-required",
+      "true",
+    );
+  });
+
   it("describes the control with its hint", () => {
     render(
       <TextField id="email" label="Email address" hint="We never share it." />,

@@ -3,6 +3,7 @@ export default function TextField({
   label,
   error,
   hint,
+  required,
   labelAction,
   as = "input",
   ...inputProps
@@ -27,6 +28,7 @@ export default function TextField({
         id={id}
         aria-invalid={error ? "true" : undefined}
         aria-describedby={describedBy}
+        aria-required={required || undefined}
         {...inputProps}
       />
 
