@@ -67,6 +67,8 @@ export default function Login() {
     submitTimer.current = setTimeout(() => {
       if (remember) {
         localStorage.setItem(REMEMBERED_EMAIL_KEY, email.trim());
+      } else {
+        localStorage.removeItem(REMEMBERED_EMAIL_KEY);
       }
 
       setSubmitting(false);

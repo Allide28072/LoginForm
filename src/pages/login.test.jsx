@@ -219,6 +219,21 @@ describe("Login page", () => {
     ).toBeChecked();
   });
 
+  it("forgets a stored email when remember me is unchecked", async () => {
+    localStorage.setItem("loginform.rememberedEmail", "old@example.com");
+    const user = userEvent.setup();
+    renderLogin();
+
+    await user.type(screen.getByLabelText(/^password$/i), "secret123");
+    await user.click(screen.getByRole("checkbox", { name: /remember me/i }));
+    await user.click(screen.getByRole("button", { name: /sign in/i }));
+
+    expect(
+      await screen.findByText(/form validated successfully/i),
+    ).toBeInTheDocument();
+    expect(localStorage.getItem("loginform.rememberedEmail")).toBeNull();
+  });
+
   it("toggles password visibility", async () => {
     const user = userEvent.setup();
     renderLogin();
