@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import usePageTitle from "../hooks/usePageTitle";
+import { firstError, validateLogin } from "../lib/validation";
 
 export default function Login() {
   usePageTitle("Sign in");
@@ -17,18 +18,10 @@ export default function Login() {
     setError("");
     setSuccess(false);
 
-    if (!email.trim() || !password) {
-      setError("Please enter your email and password.");
-      return;
-    }
+    const message = firstError(validateLogin({ email, password }));
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError("Enter a valid email address.");
-      return;
-    }
-
-    if (password.length < 6) {
-      setError("Your password must be at least 6 characters.");
+    if (message) {
+      setError(message);
       return;
     }
 

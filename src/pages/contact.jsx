@@ -1,5 +1,6 @@
 import { useState } from "react";
 import usePageTitle from "../hooks/usePageTitle";
+import { firstError, validateContact } from "../lib/validation";
 
 export default function Contact() {
   usePageTitle("Contact");
@@ -29,18 +30,10 @@ export default function Contact() {
   function handleSubmit(event) {
     event.preventDefault();
 
-    if (
-      !form.name.trim() ||
-      !form.email.trim() ||
-      !form.subject.trim() ||
-      !form.message.trim()
-    ) {
-      setError("Please complete every field.");
-      return;
-    }
+    const message = firstError(validateContact(form));
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-      setError("Please enter a valid email address.");
+    if (message) {
+      setError(message);
       return;
     }
 
