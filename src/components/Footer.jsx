@@ -12,19 +12,19 @@ export default function Footer() {
           <p>Simple, modern web experiences built with React.</p>
         </div>
 
-        <div className="footer-col">
+        <nav className="footer-col" aria-label="Explore">
           <h4>Explore</h4>
           <Link to="/">Home</Link>
           <Link to="/about">About</Link>
           <Link to="/help">Help</Link>
-        </div>
+        </nav>
 
-        <div className="footer-col">
+        <nav className="footer-col" aria-label="Contact">
           <h4>Contact</h4>
           <a href="mailto:Karangwa@gmail.com">Karangwa@gmail.com</a>
           <a href="tel:+250798917894">+250 798 917 894</a>
           <Link to="/contact">Send a message</Link>
-        </div>
+        </nav>
       </div>
 
       <div className="footer-bottom">

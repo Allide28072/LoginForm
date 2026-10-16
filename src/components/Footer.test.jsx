@@ -63,4 +63,15 @@ describe("Footer", () => {
       screen.getByRole("link", { name: /send a message/i }),
     ).toHaveAttribute("href", "/contact");
   });
+
+  it("groups its links under labelled navigation landmarks", () => {
+    renderFooter();
+
+    expect(
+      screen.getByRole("navigation", { name: /explore/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("navigation", { name: /contact/i }),
+    ).toBeInTheDocument();
+  });
 });
