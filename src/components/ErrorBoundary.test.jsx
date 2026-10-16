@@ -34,6 +34,17 @@ describe("ErrorBoundary", () => {
     );
   });
 
+  it("shows the caught message inside a details block", () => {
+    render(
+      <ErrorBoundary>
+        <Flaky />
+      </ErrorBoundary>,
+    );
+
+    expect(screen.getByText(/error details/i)).toBeInTheDocument();
+    expect(screen.getByText("kaboom")).toBeInTheDocument();
+  });
+
   it("recovers when the user retries", async () => {
     const user = userEvent.setup();
 

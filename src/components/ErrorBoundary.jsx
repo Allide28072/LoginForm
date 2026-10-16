@@ -4,12 +4,12 @@ export default class ErrorBoundary extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { hasError: false };
+    this.state = { hasError: false, error: null };
     this.handleReset = this.handleReset.bind(this);
   }
 
-  static getDerivedStateFromError() {
-    return { hasError: true };
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
   }
 
   componentDidCatch(error, info) {
@@ -17,7 +17,7 @@ export default class ErrorBoundary extends Component {
   }
 
   handleReset() {
-    this.setState({ hasError: false });
+    this.setState({ hasError: false, error: null });
   }
 
   render() {
@@ -30,6 +30,12 @@ export default class ErrorBoundary extends Component {
             The page could not be displayed. Try again, or use the
             navigation to open a different page.
           </p>
+          {this.state.error && (
+            <details className="error-details">
+              <summary>Error details</summary>
+              <pre>{this.state.error.message}</pre>
+            </details>
+          )}
           <button
             type="button"
             className="button button-primary"
