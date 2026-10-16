@@ -1,5 +1,13 @@
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+export const EMAIL_MAX_LENGTH = 254;
+export const PASSWORD_MIN_LENGTH = 6;
+export const PASSWORD_MAX_LENGTH = 128;
+export const NAME_MAX_LENGTH = 80;
+export const SUBJECT_MAX_LENGTH = 120;
+export const MESSAGE_MIN_LENGTH = 10;
+export const MESSAGE_MAX_LENGTH = 1000;
+
 export function isValidEmail(value) {
   return EMAIL_PATTERN.test(value.trim());
 }
@@ -15,8 +23,9 @@ export function validateLogin({ email, password }) {
 
   if (!password) {
     errors.password = "Please enter your password.";
-  } else if (password.length < 6) {
-    errors.password = "Your password must be at least 6 characters.";
+  } else if (password.length < PASSWORD_MIN_LENGTH) {
+    errors.password =
+      `Your password must be at least ${PASSWORD_MIN_LENGTH} characters.`;
   }
 
   return errors;
