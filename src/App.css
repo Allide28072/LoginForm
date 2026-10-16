@@ -806,6 +806,13 @@ p {
   margin-top: 24px;
 }
 
+.not-found-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
 .error-boundary {
   max-width: 620px;
   padding: 70px 0;
