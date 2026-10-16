@@ -1325,6 +1325,21 @@ p {
   background: #ffffff;
 }
 
+.faq-search {
+  max-width: 420px;
+  margin-bottom: 20px;
+}
+
+.faq-empty {
+  margin: 18px 0 0;
+  padding: 18px 22px;
+  border: 1px dashed #dfe3ed;
+  border-radius: 13px;
+  color: #777e90;
+  background: #fbfbfd;
+  font-size: 13px;
+}
+
 .faq-item + .faq-item {
   border-top: 1px solid #eceef4;
 }
