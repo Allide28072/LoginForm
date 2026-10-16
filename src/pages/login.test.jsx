@@ -185,6 +185,24 @@ describe("Login page", () => {
     ).not.toBeInTheDocument();
   });
 
+  it("stores the email when remember me is checked", async () => {
+    localStorage.clear();
+    const user = userEvent.setup();
+    renderLogin();
+
+    await user.type(screen.getByLabelText(/email address/i), "me@example.com");
+    await user.type(screen.getByLabelText(/^password$/i), "secret123");
+    await user.click(screen.getByRole("checkbox", { name: /remember me/i }));
+    await user.click(screen.getByRole("button", { name: /sign in/i }));
+
+    expect(
+      await screen.findByText(/form validated successfully/i),
+    ).toBeInTheDocument();
+    expect(localStorage.getItem("loginform.rememberedEmail")).toBe(
+      "me@example.com",
+    );
+  });
+
   it("toggles password visibility", async () => {
     const user = userEvent.setup();
     renderLogin();

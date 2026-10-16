@@ -14,6 +14,8 @@ const fieldIds = {
   password: "login-password",
 };
 
+export const REMEMBERED_EMAIL_KEY = "loginform.rememberedEmail";
+
 function focusFirstInvalid(errors) {
   const firstField = Object.keys(fieldIds).find((field) => errors[field]);
 
@@ -59,6 +61,10 @@ export default function Login() {
     setSubmitting(true);
 
     submitTimer.current = setTimeout(() => {
+      if (remember) {
+        localStorage.setItem(REMEMBERED_EMAIL_KEY, email.trim());
+      }
+
       setSubmitting(false);
       setSuccess(true);
     }, 700);
