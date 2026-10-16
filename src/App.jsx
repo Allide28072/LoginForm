@@ -6,6 +6,7 @@ import About from "./pages/about";
 import Contact from "./pages/contact";
 import Login from "./pages/login";
 import Help from "./pages/help";
+import NotFound from "./pages/notFound";
 import "./App.css";
 
 export default function App() {
@@ -24,7 +25,7 @@ export default function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/help" element={<Help />} />
-          <Route path="*" element={<h1>404 - Page not found</h1>} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
 

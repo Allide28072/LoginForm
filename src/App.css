@@ -753,6 +753,10 @@ p {
   line-height: 1.9;
 }
 
+.page-hero > .button {
+  margin-top: 26px;
+}
+
 /* =========================
    ABOUT PAGE
 ========================= */
