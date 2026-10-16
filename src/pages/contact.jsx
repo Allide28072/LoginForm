@@ -34,6 +34,18 @@ export default function Contact() {
     setSent(false);
   }
 
+  function handleBlur(event) {
+    const { name, value } = event.target;
+    const trimmed = value.trim();
+
+    if (trimmed === value) return;
+
+    setForm((previous) => ({
+      ...previous,
+      [name]: trimmed,
+    }));
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
 
@@ -92,7 +104,12 @@ export default function Contact() {
           <div className="contact-decoration">&lt;/&gt;</div>
         </aside>
 
-        <form className="form-card" onSubmit={handleSubmit} noValidate>
+        <form
+          className="form-card"
+          onSubmit={handleSubmit}
+          onBlur={handleBlur}
+          noValidate
+        >
           <div className="form-heading">
             <h2>Send a message</h2>
             <p>Fields marked with * are required.</p>

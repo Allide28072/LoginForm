@@ -54,6 +54,17 @@ describe("Contact page", () => {
     );
   });
 
+  it("trims a field value when it loses focus", async () => {
+    const user = userEvent.setup();
+    renderContact();
+
+    const name = screen.getByLabelText(/full name/i);
+    await user.type(name, "  Aline  ");
+    await user.tab();
+
+    expect(name).toHaveValue("Aline");
+  });
+
   it("reports every empty field", async () => {
     const user = userEvent.setup();
     renderContact();
