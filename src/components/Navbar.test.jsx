@@ -1,7 +1,17 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter, useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
+
+function JumpButton() {
+  const navigate = useNavigate();
+
+  return (
+    <button type="button" onClick={() => navigate("/help")}>
+      Jump to help
+    </button>
+  );
+}
 
 function renderNavbar() {
   return render(
@@ -57,5 +67,23 @@ describe("Navbar", () => {
     await user.click(screen.getByRole("button", { name: /close menu/i }));
 
     expect(navigation).not.toHaveClass("open");
+  });
+
+  it("closes the mobile menu after navigating elsewhere", async () => {
+    const user = userEvent.setup();
+
+    render(
+      <MemoryRouter initialEntries={["/"]}>
+        <Navbar />
+        <JumpButton />
+      </MemoryRouter>,
+    );
+
+    await user.click(screen.getByRole("button", { name: /open menu/i }));
+    expect(screen.getByRole("navigation")).toHaveClass("open");
+
+    await user.click(screen.getByRole("button", { name: /jump to help/i }));
+
+    expect(screen.getByRole("navigation")).not.toHaveClass("open");
   });
 });

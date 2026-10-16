@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useLocation } from "react-router-dom";
 
 const links = [
   { label: "Home", path: "/" },
@@ -10,6 +10,13 @@ const links = [
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
+  const [lastPath, setLastPath] = useState(location.pathname);
+
+  if (lastPath !== location.pathname) {
+    setLastPath(location.pathname);
+    setMenuOpen(false);
+  }
 
   function closeMenu() {
     setMenuOpen(false);
