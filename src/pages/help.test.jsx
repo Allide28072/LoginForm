@@ -54,4 +54,22 @@ describe("Help page", () => {
     expect(first).toHaveAttribute("aria-expanded", "false");
     expect(screen.queryByRole("region")).not.toBeInTheDocument();
   });
+
+  it("filters the questions by search text", async () => {
+    const user = userEvent.setup();
+    renderHelp();
+
+    await user.type(
+      screen.getByLabelText(/search the help center/i),
+      "authenticate",
+    );
+
+    expect(
+      screen.getByRole("button", { name: /authenticate users/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: /what is loginform/i }),
+    ).not.toBeInTheDocument();
+    expect(screen.getByText("1 of 5 articles")).toBeInTheDocument();
+  });
 });

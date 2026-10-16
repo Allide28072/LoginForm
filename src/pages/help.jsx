@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import usePageTitle from "../hooks/usePageTitle";
+import TextField from "../components/TextField";
 
 const questions = [
   {
@@ -34,6 +35,22 @@ export default function Help() {
   usePageTitle("Help center");
 
   const [openIndex, setOpenIndex] = useState(0);
+  const [query, setQuery] = useState("");
+
+  const normalizedQuery = query.trim().toLowerCase();
+  const visibleQuestions = questions
+    .map((item, index) => ({ ...item, index }))
+    .filter((item) => {
+      if (!normalizedQuery) return true;
+
+      const haystack = `${item.question} ${item.answer}`.toLowerCase();
+      return haystack.includes(normalizedQuery);
+    });
+
+  function handleSearch(event) {
+    setQuery(event.target.value);
+    setOpenIndex(-1);
+  }
 
   return (
     <div className="page-container">
@@ -52,22 +69,37 @@ export default function Help() {
             <span className="section-label">FREQUENTLY ASKED QUESTIONS</span>
             <h2>Questions, answered.</h2>
           </div>
-          <span className="faq-count">{questions.length} articles</span>
+          <span className="faq-count">
+            {normalizedQuery
+              ? `${visibleQuestions.length} of ${questions.length} articles`
+              : `${questions.length} articles`}
+          </span>
+        </div>
+
+        <div className="faq-search">
+          <TextField
+            id="faq-search"
+            label="Search the help center"
+            type="search"
+            value={query}
+            onChange={handleSearch}
+            placeholder="Try “login” or “contact”"
+          />
         </div>
 
         <div className="faq-list">
-          {questions.map((item, index) => {
-            const isOpen = openIndex === index;
+          {visibleQuestions.map((item) => {
+            const isOpen = openIndex === item.index;
 
             return (
               <article className={`faq-item ${isOpen ? "open" : ""}`} key={item.question}>
                 <button
                   className="faq-question"
                   type="button"
-                  id={`faq-question-${index}`}
+                  id={`faq-question-${item.index}`}
                   aria-expanded={isOpen}
-                  aria-controls={`faq-answer-${index}`}
-                  onClick={() => setOpenIndex(isOpen ? -1 : index)}
+                  aria-controls={`faq-answer-${item.index}`}
+                  onClick={() => setOpenIndex(isOpen ? -1 : item.index)}
                 >
                   <span>{item.question}</span>
                   <span className="faq-toggle" aria-hidden="true">
@@ -78,9 +110,9 @@ export default function Help() {
                 {isOpen && (
                   <div
                     className="faq-answer"
-                    id={`faq-answer-${index}`}
+                    id={`faq-answer-${item.index}`}
                     role="region"
-                    aria-labelledby={`faq-question-${index}`}
+                    aria-labelledby={`faq-question-${item.index}`}
                   >
                     <p>{item.answer}</p>
                   </div>
