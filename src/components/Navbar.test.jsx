@@ -86,4 +86,15 @@ describe("Navbar", () => {
 
     expect(screen.getByRole("navigation")).not.toHaveClass("open");
   });
+
+  it("locks body scrolling while the menu is open", async () => {
+    const user = userEvent.setup();
+    renderNavbar();
+
+    await user.click(screen.getByRole("button", { name: /open menu/i }));
+    expect(document.body.style.overflow).toBe("hidden");
+
+    await user.click(screen.getByRole("button", { name: /close menu/i }));
+    expect(document.body.style.overflow).toBe("");
+  });
 });
