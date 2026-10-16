@@ -8,6 +8,7 @@ import {
   validateLogin,
 } from "../lib/validation";
 import TextField from "../components/TextField";
+import { focusFirstInvalid } from "../lib/focus";
 
 const fieldIds = {
   email: "login-email",
@@ -15,14 +16,6 @@ const fieldIds = {
 };
 
 export const REMEMBERED_EMAIL_KEY = "loginform.rememberedEmail";
-
-function focusFirstInvalid(errors) {
-  const firstField = Object.keys(fieldIds).find((field) => errors[field]);
-
-  if (firstField) {
-    document.getElementById(fieldIds[firstField])?.focus();
-  }
-}
 
 export default function Login() {
   usePageTitle("Sign in");
@@ -62,7 +55,7 @@ export default function Login() {
     setErrors(nextErrors);
 
     if (Object.keys(nextErrors).length > 0) {
-      focusFirstInvalid(nextErrors);
+      focusFirstInvalid(nextErrors, fieldIds);
       return;
     }
 

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import usePageTitle from "../hooks/usePageTitle";
 import { MESSAGE_MAX_LENGTH, validateContact } from "../lib/validation";
+import { focusFirstInvalid } from "../lib/focus";
 import TextField from "../components/TextField";
 
 const emptyForm = {
@@ -16,14 +17,6 @@ const fieldIds = {
   subject: "contact-subject",
   message: "contact-message",
 };
-
-function focusFirstInvalid(errors) {
-  const firstField = Object.keys(fieldIds).find((field) => errors[field]);
-
-  if (firstField) {
-    document.getElementById(fieldIds[firstField])?.focus();
-  }
-}
 
 export default function Contact() {
   usePageTitle("Contact");
@@ -68,7 +61,7 @@ export default function Contact() {
     setErrors(nextErrors);
 
     if (Object.keys(nextErrors).length > 0) {
-      focusFirstInvalid(nextErrors);
+      focusFirstInvalid(nextErrors, fieldIds);
       return;
     }
 
