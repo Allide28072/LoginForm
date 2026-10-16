@@ -1,19 +1,67 @@
-# React + Vite
+# LoginForm
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A small, complete React website that demonstrates routing, reusable
+components, responsive layouts and client-side form validation.
 
-Currently, two official plugins are available:
+The project is a frontend-only demo: the login and contact forms validate
+input in the browser and show a confirmation, but no data is sent to a
+server.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- Multi-page routing with React Router (Home, About, Contact, Login, Help, 404)
+- Client-side validation with inline, field-level error messages
+- Accessible forms with `aria-invalid`, `aria-describedby` and live status messages
+- Collapsible navigation for small screens
+- Loading and success states while submitting forms
+- Lazy-loaded routes with a suspense fallback
+- Error boundary that keeps the layout usable if a page crashes
+- Reduced-motion and keyboard-friendly focus styles
+- Unit and component tests with Vitest and React Testing Library
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+## Tech stack
 
-Note: This will impact Vite dev & build performances.
-You can also try [the experimental native React Compiler support in plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md#rust-react-compiler) by using `compiler: true` in the plugin options instead of using the Babel plugin.
+- [React 19](https://react.dev)
+- [Vite](https://vite.dev)
+- [React Router](https://reactrouter.com)
+- [Vitest](https://vitest.dev) and [Testing Library](https://testing-library.com)
 
-## Expanding the ESLint configuration
+## Project structure
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```
+src/
+  components/   Navbar, Footer, TextField, ErrorBoundary, PageLoader, ScrollToTop
+  hooks/        usePageTitle
+  lib/          validation helpers
+  pages/        home, about, contact, login, help, notFound
+  test/         Vitest setup file
+  App.jsx       routing, layout and shared shell
+  index.css     global resets and base typography
+  App.css       page and component styles
+```
+
+## Getting started
+
+```bash
+npm install
+npm run dev
+```
+
+Open the printed local URL in your browser.
+
+## Scripts
+
+| Command             | Description                          |
+| ------------------- | ------------------------------------ |
+| `npm run dev`       | Start the development server         |
+| `npm run build`     | Create a production build in `dist/` |
+| `npm run preview`   | Preview the production build         |
+| `npm run lint`      | Run ESLint over the project          |
+| `npm test`          | Run the test suite once              |
+| `npm run test:watch`| Run tests in watch mode              |
+
+## Notes
+
+The login and contact forms are intentionally not connected to a backend.
+To make them functional, replace the simulated `setTimeout` submission with
+a real `fetch` request to your authentication or messaging service.
