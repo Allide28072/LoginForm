@@ -64,15 +64,24 @@ export default function Help() {
                 <button
                   className="faq-question"
                   type="button"
+                  id={`faq-question-${index}`}
                   aria-expanded={isOpen}
+                  aria-controls={`faq-answer-${index}`}
                   onClick={() => setOpenIndex(isOpen ? -1 : index)}
                 >
                   <span>{item.question}</span>
-                  <span className="faq-toggle">{isOpen ? "−" : "+"}</span>
+                  <span className="faq-toggle" aria-hidden="true">
+                    {isOpen ? "−" : "+"}
+                  </span>
                 </button>
 
                 {isOpen && (
-                  <div className="faq-answer">
+                  <div
+                    className="faq-answer"
+                    id={`faq-answer-${index}`}
+                    role="region"
+                    aria-labelledby={`faq-question-${index}`}
+                  >
                     <p>{item.answer}</p>
                   </div>
                 )}

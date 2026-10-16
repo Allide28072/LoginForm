@@ -50,6 +50,7 @@ export default function Navbar() {
         <nav
           id="primary-navigation"
           className={`nav-links ${menuOpen ? "open" : ""}`}
+          aria-label="Primary"
         >
           {links.map((link) => (
             <NavLink
