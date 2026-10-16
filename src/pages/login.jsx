@@ -116,7 +116,7 @@ export default function Login() {
             </button>
           </div>
 
-          {notice && <p className="form-message">{notice}</p>}
+          {notice && <p className="form-message notice">{notice}</p>}
           {success && (
             <p className="form-message success" role="status">
               Form validated successfully. Authentication is not

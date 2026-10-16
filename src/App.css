@@ -1021,6 +1021,10 @@ p {
   line-height: 1.7;
 }
 
+.form-message.notice {
+  color: #b45309;
+}
+
 .error {
   color: #dc2626;
 }

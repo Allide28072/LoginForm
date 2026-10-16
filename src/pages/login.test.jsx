@@ -98,4 +98,15 @@ describe("Login page", () => {
 
     expect(password).toHaveAttribute("type", "text");
   });
+
+  it("shows a notice when password recovery is requested", async () => {
+    const user = userEvent.setup();
+    renderLogin();
+
+    await user.click(screen.getByRole("button", { name: /forgot password/i }));
+
+    expect(
+      screen.getByText(/password recovery is not connected yet/i),
+    ).toHaveClass("notice");
+  });
 });
